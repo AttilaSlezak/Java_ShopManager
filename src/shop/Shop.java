@@ -1,5 +1,7 @@
 package shop;
 
+import java.util.Vector;
+
 /**
  * Created by Slezak Attila on 2016.09.10..
  */
@@ -8,21 +10,17 @@ public class Shop {
     private String name;
     private String address;
     private String owner;
-    private Milk[] milkCounter;
-    private int flag;
+    private Vector milkCounter;
 
-    public Shop(String name, String address, String owner, Milk[] milkCounter) {
+    public Shop(String name, String address, String owner, Vector milkCounter) {
         this.name = name;
         this.address = address;
         this.owner = owner;
         this.milkCounter = milkCounter;
-        flag = milkCounter.length - 1;
     }
 
     public Shop(String name, String address, String owner) {
-        this.name = name;
-        this.address = address;
-        this.owner = owner;
+        this(name, address, owner, new Vector());
     }
 
     public String getName() {
@@ -38,14 +36,14 @@ public class Shop {
     }
 
     public boolean isThereAnyMilk() {
-        return flag >= 0;
-    }
-
-    public Milk buyMilk(Milk m) {
-        return milkCounter[flag--];
+        return !milkCounter.isEmpty();
     }
 
     public void fillUpMilkCounter(Milk m) {
-        milkCounter[flag++] = m;
+        milkCounter.add(m);
+    }
+
+    public Milk buyMilk(Milk m) {
+        return (Milk)milkCounter.remove(milkCounter.indexOf(m));
     }
 }
