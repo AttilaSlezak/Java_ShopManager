@@ -42,17 +42,17 @@ public class Milk {
     }
 
     public boolean checkStillUnderGuarantee() {
-        return getBestBefore().before(new Date());
+        return bestBefore.after(new Date());
     }
 
     @Override
     public String toString() {
         return "Milk{" +
-                "cubicCapacity: " + cubicCapacity + " ml" +
-                ", producer: '" + producer + '\'' +
-                ", bestBefore: " + bestBefore +
-                ", fatContent: " + fatContent +
-                ", price: " + price + " dollar(s)" +
+                "cubic capacity: " + cubicCapacity + " ml" +
+                ", producer: '" + producer + "'" +
+                ", best before: " + bestBefore +
+                ", fat content: " + fatContent +
+                ", price: " + price + " forint(s)" +
                 '}';
     }
 }
