@@ -1,7 +1,6 @@
 package shop;
 
 import java.util.Hashtable;
-import java.util.Vector;
 
 /**
  * Created by Slezak Attila on 2016.09.10..
