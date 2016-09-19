@@ -23,12 +23,17 @@ public class MilkTest {
         testCalender.add(Calendar.HOUR, 1);
 
         testDate = testCalender.getTime();
-        testMilk = new Milk(101l, 1000, "Plain Milk inc.", testDate, 2.8);
+        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", testDate, 2.8);
     }
 
     @After
     public void tearDown() throws Exception {
         testMilk = null;
+    }
+
+    @org.junit.Test
+    public void getBarCode() throws Exception {
+        assertEquals(101l, (long)testMilk.getBarCode());
     }
 
     @org.junit.Test

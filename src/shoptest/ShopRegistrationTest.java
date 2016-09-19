@@ -25,7 +25,7 @@ public class ShopRegistrationTest {
     @Before
     public void setUp() throws Exception {
         Shop testShop = new Shop("Food Store", "101st Corner Street", "George Werner");
-        testMilk = new Milk(101l, 1000, "Plain Milk inc.", new Date(), 2.8);
+        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), 2.8);
 
         Class classShopReg = Shop.class.getDeclaredClasses()[0];
         Constructor constShopReg = classShopReg.getDeclaredConstructors()[0];
@@ -73,7 +73,7 @@ public class ShopRegistrationTest {
 
     @Test
     public void setMilk() throws Exception {
-        Milk milk = new Milk(201l, 500, "Plain Milk inc.", new Date(), 1.5);
+        Milk milk = new Milk(201l, Milk.HALF_LITER, "Plain Milk inc.", new Date(), 1.5);
         setObjectInCertainMethod("setMilk", milk);
         Milk resultMilk = (Milk) getObjectFromCertainMethod("getMilk");
         assertEquals(milk, resultMilk);

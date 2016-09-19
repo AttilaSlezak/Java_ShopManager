@@ -17,15 +17,18 @@ import static org.junit.Assert.*;
 public class ShopTest {
 
     private Shop testShop;
+    private Milk testMilk;
 
     @Before
     public void setUp() throws Exception {
         testShop = new Shop("Food Store", "101st Corner Street", "George Werner");
+        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), 2.8);
     }
 
     @After
     public void tearDown() throws Exception {
         testShop = null;
+        testMilk = null;
     }
 
     @Test
@@ -50,21 +53,18 @@ public class ShopTest {
 
     @Test
     public void isThereAnyMilkIfYes() throws Exception {
-        Milk testMilk = new Milk(101l, 1000, "Plain Milk inc.", new Date(), 2.8);
         testShop.fillUpMilkCounter(testMilk);
         assertTrue(testShop.isThereAnyMilk());
     }
 
     @Test
     public void fillUpMilkCounter() throws Exception {
-        Milk testMilk = new Milk(101l, 1000, "Plain Milk inc.", new Date(), 2.8);
         testShop.fillUpMilkCounter(testMilk);
         assertTrue(testShop.isThereAnyMilk());
     }
 
     @Test
     public void buyMilk() throws Exception {
-        Milk testMilk = new Milk(101l, 1000, "Plain Milk inc.", new Date(), 2.8);
         testShop.fillUpMilkCounter(testMilk);
         assertEquals(testMilk, testShop.buyMilk(101l));
     }
