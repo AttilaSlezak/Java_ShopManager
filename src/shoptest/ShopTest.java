@@ -21,8 +21,8 @@ public class ShopTest {
 
     @Before
     public void setUp() throws Exception {
-        testShop = new Shop("Food Store", "101st Corner Street", "George Werner");
-        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), 2.8);
+        testShop = new Shop("Food Store", "101st Corner Street", "George Warren");
+        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
     }
 
     @After
@@ -43,7 +43,7 @@ public class ShopTest {
 
     @Test
     public void getOwner() throws Exception {
-        assertEquals("George Werner", testShop.getOwner());
+        assertEquals("George Warren", testShop.getOwner());
     }
 
     @Test
@@ -53,19 +53,19 @@ public class ShopTest {
 
     @Test
     public void isThereAnyMilkIfYes() throws Exception {
-        testShop.fillUpMilkCounter(testMilk);
+        testShop.replenishMilkCounter(testMilk);
         assertTrue(testShop.isThereAnyMilk());
     }
 
     @Test
     public void fillUpMilkCounter() throws Exception {
-        testShop.fillUpMilkCounter(testMilk);
+        testShop.replenishMilkCounter(testMilk);
         assertTrue(testShop.isThereAnyMilk());
     }
 
     @Test
     public void buyMilk() throws Exception {
-        testShop.fillUpMilkCounter(testMilk);
+        testShop.replenishMilkCounter(testMilk);
         assertEquals(testMilk, testShop.buyMilk(101l));
     }
 }

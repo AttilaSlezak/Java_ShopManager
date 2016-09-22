@@ -23,7 +23,7 @@ public class MilkTest {
         testCalender.add(Calendar.HOUR, 1);
 
         testDate = testCalender.getTime();
-        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", testDate, 2.8);
+        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", testDate, Milk.WHOLE_MILK);
     }
 
     @After
@@ -32,8 +32,8 @@ public class MilkTest {
     }
 
     @org.junit.Test
-    public void getBarCode() throws Exception {
-        assertEquals(101l, (long)testMilk.getBarCode());
+    public void getBarcode() throws Exception {
+        assertEquals(101l, (long)testMilk.getBarcode());
     }
 
     @org.junit.Test
@@ -63,7 +63,7 @@ public class MilkTest {
 
     @org.junit.Test
     public void testToString() throws Exception {
-        assertEquals("Milk{cubic capacity: 1000 ml, producer: 'Plain Milk inc.', best before: " + testDate +
+        assertEquals("Milk{barcode: 101, cubic capacity: 1000 ml, producer: 'Plain Milk inc.', best before: " + testDate +
                 ", fat content: 2.8}", testMilk.toString());
     }
 }

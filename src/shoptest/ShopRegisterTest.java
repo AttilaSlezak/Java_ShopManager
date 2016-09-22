@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Slezak Attila on 2016.09.19..
  */
-public class ShopRegistrationTest {
+public class ShopRegisterTest {
 
     private Method[] methodsShopReg = Shop.class.getDeclaredClasses()[0].getDeclaredMethods();
     private Milk testMilk;
@@ -24,13 +24,14 @@ public class ShopRegistrationTest {
 
     @Before
     public void setUp() throws Exception {
-        Shop testShop = new Shop("Food Store", "101st Corner Street", "George Werner");
-        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), 2.8);
+        Shop testShop = new Shop("Food Store", "101st Corner Street", "George Warren");
+        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
 
         Class classShopReg = Shop.class.getDeclaredClasses()[0];
         Constructor constShopReg = classShopReg.getDeclaredConstructors()[0];
         constShopReg.setAccessible(true);
         objShopReg = constShopReg.newInstance(testShop, testMilk, 3, 100);
+        constShopReg.setAccessible(false);
     }
 
     @After
@@ -73,7 +74,7 @@ public class ShopRegistrationTest {
 
     @Test
     public void setMilk() throws Exception {
-        Milk milk = new Milk(201l, Milk.HALF_LITER, "Plain Milk inc.", new Date(), 1.5);
+        Milk milk = new Milk(201l, Milk.HALF_LITER, "Plain Milk inc.", new Date(), Milk.LOW_FAT_MILK);
         setObjectInCertainMethod("setMilk", milk);
         Milk resultMilk = (Milk) getObjectFromCertainMethod("getMilk");
         assertEquals(milk, resultMilk);
