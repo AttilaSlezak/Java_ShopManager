@@ -31,7 +31,7 @@ public class ShopTest {
     public void setUp() throws Exception {
         testShop = new Shop("Food Store", "101st Corner Street", "George Warren");
         testMilk = MilkFactory.newLongLifeMilk(101L, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
-        testCheese = new Cheese(120L, 700, "Normand Cheese inc.", new Date(), 40);
+        testCheese = new Cheese(120L, 700, "Normand Cheese inc.", new Date(), 40.0);
         Field fieldFoodCounter = Shop.class.getDeclaredField("foodCounter");
         fieldFoodCounter.setAccessible(true);
         testShopFoodCounter = (Hashtable)fieldFoodCounter.get(testShop);

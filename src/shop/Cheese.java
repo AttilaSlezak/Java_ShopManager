@@ -31,6 +31,6 @@ public class Cheese extends Food {
                 ", weight: " + weight + " kg" +
                 ", producer: '" + super.getProducer() + "'" +
                 ", best before: " + super.getBestBefore() +
-                ", fat content: " + fatContent + " %}";
+                ", fat content: " + fatContent + "%}";
     }
 }
