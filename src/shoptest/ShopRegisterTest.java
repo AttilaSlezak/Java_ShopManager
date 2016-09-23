@@ -4,10 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import shop.Milk;
+import shop.MilkFactory;
 import shop.Shop;
+import static shoptest.PrivateDataAccessor.*;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -25,7 +26,7 @@ public class ShopRegisterTest {
     @Before
     public void setUp() throws Exception {
         Shop testShop = new Shop("Food Store", "101st Corner Street", "George Warren");
-        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
+        testMilk = MilkFactory.newLongLifeMilk(101L, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
 
         Class classShopReg = Shop.class.getDeclaredClasses()[0];
         Constructor constShopReg = classShopReg.getDeclaredConstructors()[0];
@@ -40,83 +41,61 @@ public class ShopRegisterTest {
         testMilk = null;
     }
 
-    private Object getObjectFromCertainMethod(String methodName)
-            throws InvocationTargetException, IllegalAccessException {
-        Object result = null;
-        for (Method oneMethod : methodsShopReg) {
-            if (oneMethod.getName().equals(methodName)) {
-                oneMethod.setAccessible(true);
-                result = oneMethod.invoke(objShopReg);
-                oneMethod.setAccessible(false);
-                break;
-            }
-        }
-        return result;
-    }
-
-    private void setObjectInCertainMethod(String methodName, Object newObj)
-            throws InvocationTargetException, IllegalAccessException {
-        for (Method oneMethod : methodsShopReg) {
-            if (oneMethod.getName().equals(methodName)) {
-                oneMethod.setAccessible(true);
-                oneMethod.invoke(objShopReg, newObj);
-                oneMethod.setAccessible(false);
-                break;
-            }
-        }
-    }
-
     @Test
     public void getMilk() throws Exception {
-        Milk milk = (Milk) getObjectFromCertainMethod("getMilk");
+        Milk milk = (Milk)getObjectFromCertainMethod("getFood", methodsShopReg, objShopReg);
         assertEquals(testMilk, milk);
     }
 
     @Test
     public void setMilk() throws Exception {
-        Milk milk = new Milk(201l, Milk.HALF_LITER, "Plain Milk inc.", new Date(), Milk.LOW_FAT_MILK);
-        setObjectInCertainMethod("setMilk", milk);
-        Milk resultMilk = (Milk) getObjectFromCertainMethod("getMilk");
+        Milk milk = MilkFactory.newLongLifeMilk(201L, Milk.HALF_LITER, "Plain Milk inc.", new Date(), Milk.LOW_FAT_MILK);
+        setObjectInCertainMethod("setFood", methodsShopReg, objShopReg, milk);
+        Milk resultMilk = (Milk)getObjectFromCertainMethod("getFood", methodsShopReg, objShopReg);
         assertEquals(milk, resultMilk);
     }
 
     @Test
     public void getQuantity() throws Exception {
-        int quantity = (int) getObjectFromCertainMethod("getQuantity");
+        long quantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
         assertEquals(3, quantity);
     }
 
     @Test
     public void setQuantity() throws Exception {
-        setObjectInCertainMethod("setQuantity", 10);
-        int resultQuantity = (int) getObjectFromCertainMethod("getQuantity");
+        setObjectInCertainMethod("setQuantity", methodsShopReg, objShopReg, 10);
+        long resultQuantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
         assertEquals(10, resultQuantity);
     }
 
     @Test
     public void addQuantity() throws Exception {
-        setObjectInCertainMethod("addQuantity", 5);
-        int resultQuantity = (int) getObjectFromCertainMethod("getQuantity");
-        assertEquals(8, resultQuantity);
+        long quantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
+        long difference = 5;
+        setObjectInCertainMethod("addQuantity", methodsShopReg, objShopReg, difference);
+        long resultQuantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
+        assertEquals(quantity + difference, resultQuantity);
     }
 
     @Test
     public void subtractQuantity() throws Exception {
-        setObjectInCertainMethod("subtractQuantity", 2);
-        int resultQuantity = (int) getObjectFromCertainMethod("getQuantity");
-        assertEquals(1, resultQuantity);
+        long quantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
+        long difference = 2;
+        setObjectInCertainMethod("subtractQuantity", methodsShopReg, objShopReg, difference);
+        long resultQuantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
+        assertEquals(quantity - difference, resultQuantity);
     }
 
     @Test
     public void getPrice() throws Exception {
-        int resultPrice = (int)getObjectFromCertainMethod("getPrice");
+        long resultPrice = (long)getObjectFromCertainMethod("getPrice", methodsShopReg, objShopReg);
         assertEquals(resultPrice, 100);
     }
 
     @Test
     public void setPrice() throws Exception {
-        setObjectInCertainMethod("setPrice", 200);
-        int resultPrice = (int)getObjectFromCertainMethod("getPrice");
+        setObjectInCertainMethod("setPrice", methodsShopReg, objShopReg, 200);
+        long resultPrice = (long)getObjectFromCertainMethod("getPrice", methodsShopReg, objShopReg);
         assertEquals(resultPrice, 200);
     }
 }

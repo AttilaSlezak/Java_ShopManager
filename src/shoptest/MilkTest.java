@@ -2,6 +2,7 @@ package shoptest;
 import org.junit.After;
 import org.junit.Before;
 import shop.Milk;
+import shop.MilkFactory;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,12 +24,13 @@ public class MilkTest {
         testCalender.add(Calendar.HOUR, 1);
 
         testDate = testCalender.getTime();
-        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", testDate, Milk.WHOLE_MILK);
+        testMilk = MilkFactory.newLongLifeMilk(101l, Milk.LITER, "Plain Milk inc.", testDate, Milk.WHOLE_MILK);
     }
 
     @After
     public void tearDown() throws Exception {
         testMilk = null;
+        testDate = null;
     }
 
     @org.junit.Test

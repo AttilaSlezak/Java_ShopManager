@@ -4,9 +4,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import shop.Milk;
+import shop.MilkFactory;
 import shop.Shop;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Hashtable;
 
 
 import static org.junit.Assert.*;
@@ -16,19 +21,25 @@ import static org.junit.Assert.*;
  */
 public class ShopTest {
 
+    private Method[] methodsShopReg = Shop.class.getDeclaredClasses()[0].getDeclaredMethods();
+    private Hashtable testShopFoodCounter;
     private Shop testShop;
     private Milk testMilk;
 
     @Before
     public void setUp() throws Exception {
         testShop = new Shop("Food Store", "101st Corner Street", "George Warren");
-        testMilk = new Milk(101l, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
+        testMilk = MilkFactory.newLongLifeMilk(101l, Milk.LITER, "Plain Milk inc.", new Date(), Milk.WHOLE_MILK);
+        Field fieldFoodCounter = Shop.class.getDeclaredField("foodCounter");
+        fieldFoodCounter.setAccessible(true);
+        testShopFoodCounter = (Hashtable)fieldFoodCounter.get(testShop);
     }
 
     @After
     public void tearDown() throws Exception {
         testShop = null;
         testMilk = null;
+        testShopFoodCounter = null;
     }
 
     @Test
@@ -53,19 +64,23 @@ public class ShopTest {
 
     @Test
     public void isThereAnyMilkIfYes() throws Exception {
-        testShop.replenishMilkCounter(testMilk);
+        testShop.addNewFoodToFoodCounter(testMilk, 2, 100);
+        System.out.println(testShopFoodCounter.get(101l));
+        System.out.println(PrivateDataAccessor.getObjectFromCertainMethod("getQuantity", methodsShopReg, testShopFoodCounter.get(101l)));
         assertTrue(testShop.isThereAnyMilk());
     }
 
     @Test
-    public void fillUpMilkCounter() throws Exception {
-        testShop.replenishMilkCounter(testMilk);
-        assertTrue(testShop.isThereAnyMilk());
+    public void replenishMilkCounter() throws Exception {
+        testShop.addNewFoodToFoodCounter(testMilk, 2, 100);
+        testShop.replenishFoodCounter(testMilk.getBarcode(), 2);
+        //assertEquals(, );
     }
 
     @Test
     public void buyMilk() throws Exception {
-        testShop.replenishMilkCounter(testMilk);
-        assertEquals(testMilk, testShop.buyMilk(101l));
+        testShop.replenishFoodCounter(testMilk.getBarcode(), 2);
+
+        //assertEquals(testMilk, testShop.buyFood(101l, 2));
     }
 }
