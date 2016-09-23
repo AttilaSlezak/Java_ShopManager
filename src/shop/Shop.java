@@ -60,45 +60,45 @@ public class Shop {
     }
 
     class ShopRegister {
-        private Milk milk;
-        private int quantity;
-        private int price;
+        private Food food;
+        private long quantity;
+        private long price;
 
-        public ShopRegister(Milk milk, int quantity, int price) {
-            this.milk = milk;
+        public ShopRegister(Food food, long quantity, long price) {
+            this.food = food;
             this.quantity = quantity;
             this.price = price;
         }
 
-        public Milk getMilk() {
-            return milk;
+        public Food getFood() {
+            return food;
         }
 
-        public void setMilk(Milk milk) {
-            this.milk = milk;
+        public void setFood(Food food) {
+            this.food = food;
         }
 
-        public int getQuantity() {
+        public long getQuantity() {
             return quantity;
         }
 
-        public void setQuantity(int quantity) {
+        public void setQuantity(long quantity) {
             this.quantity = quantity;
         }
 
-        public void addQuantity(int quantity) {
+        public void addQuantity(long quantity) {
             this.quantity += quantity;
         }
 
-        public void subtractQuantity(int quantity) {
+        public void subtractQuantity(long quantity) {
             this.quantity -= quantity;
         }
 
-        public int getPrice() {
+        public long getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(long price) {
             this.price = price;
         }
     }
