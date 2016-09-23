@@ -1,5 +1,6 @@
 package shop;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
@@ -10,13 +11,13 @@ public class Shop {
     private String name;
     private String address;
     private String owner;
-    private Hashtable milkCounter;
+    private Hashtable foodCounter;
 
-    public Shop(String name, String address, String owner, Hashtable milkCounter) {
+    public Shop(String name, String address, String owner, Hashtable foodCounter) {
         this.name = name;
         this.address = address;
         this.owner = owner;
-        this.milkCounter = milkCounter;
+        this.foodCounter = foodCounter;
     }
 
     public Shop(String name, String address, String owner) {
@@ -35,28 +36,43 @@ public class Shop {
         return owner;
     }
 
+    public boolean isThereAnyCertainFood(Class foodSubClass) {
+        for (Enumeration oneFoodType = foodCounter.elements(); oneFoodType.hasMoreElements();) {
+            ShopRegister shopReg = (ShopRegister)oneFoodType.nextElement();
+            if (foodSubClass.isInstance(shopReg.getFood()) && shopReg.getQuantity() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isThereAnyMilk() {
-        return !milkCounter.isEmpty();
+        return isThereAnyCertainFood(Milk.class);
     }
 
-    public void replenishMilkCounter(Milk milk) {
-        ShopRegister shopReg = (ShopRegister) milkCounter.get(milk.getBarcode());
-        if (shopReg == null) {
-            shopReg = new ShopRegister(milk, 1, 100);
-            milkCounter.put(milk.getBarcode(), shopReg);
-        }
-        else {
-            shopReg.addQuantity(1);
-        }
+    public boolean isThereAnyCheese() {
+        return isThereAnyCertainFood(Cheese.class);
     }
 
-    public Milk buyMilk(Long barcode) {
-        ShopRegister shopReg = (ShopRegister) milkCounter.get(barcode);
+    public void replenishFoodCounter(Long barcode, long quantity) {
+        ShopRegister shopReg = (ShopRegister) foodCounter.get(barcode);
+        shopReg.addQuantity(quantity);
+    }
+
+    public void addNewFoodToFoodCounter(Food food, long quantity, long price) {
+        ShopRegister shopReg = new ShopRegister(food, quantity, price);
+        foodCounter.put(food.getBarcode(), shopReg);
+    }
+
+    public void removeFoodFromFoodCounter(Long barcode) {
+        foodCounter.remove(barcode);
+    }
+
+    public void buyFood(Long barcode, long quantity) {
+        ShopRegister shopReg = (ShopRegister) foodCounter.get(barcode);
         if (shopReg != null) {
-            shopReg.subtractQuantity(1);
-            return shopReg.getMilk();
+            shopReg.subtractQuantity(quantity);
         }
-        return null;
     }
 
     class ShopRegister {
