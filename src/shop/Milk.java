@@ -37,6 +37,6 @@ public abstract class Milk extends Food {
                 ", cubic capacity: " + cubicCapacity + " ml" +
                 ", producer: '" + super.getProducer() + "'" +
                 ", best before: " + super.getBestBefore() +
-                ", fat content: " + fatContent + " %}";
+                ", fat content: " + fatContent + "%}";
     }
 }

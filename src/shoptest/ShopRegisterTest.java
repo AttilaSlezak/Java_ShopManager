@@ -31,7 +31,7 @@ public class ShopRegisterTest {
         Class classShopReg = Shop.class.getDeclaredClasses()[0];
         Constructor constShopReg = classShopReg.getDeclaredConstructors()[0];
         constShopReg.setAccessible(true);
-        objShopReg = constShopReg.newInstance(testShop, testMilk, 3, 100);
+        objShopReg = constShopReg.newInstance(testShop, testMilk, 3L, 100L);
         constShopReg.setAccessible(false);
     }
 
@@ -58,20 +58,20 @@ public class ShopRegisterTest {
     @Test
     public void getQuantity() throws Exception {
         long quantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
-        assertEquals(3, quantity);
+        assertEquals(3L, quantity);
     }
 
     @Test
     public void setQuantity() throws Exception {
-        setObjectInCertainMethod("setQuantity", methodsShopReg, objShopReg, 10);
+        setObjectInCertainMethod("setQuantity", methodsShopReg, objShopReg, 10L);
         long resultQuantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
-        assertEquals(10, resultQuantity);
+        assertEquals(10L, resultQuantity);
     }
 
     @Test
     public void addQuantity() throws Exception {
         long quantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
-        long difference = 5;
+        long difference = 5L;
         setObjectInCertainMethod("addQuantity", methodsShopReg, objShopReg, difference);
         long resultQuantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
         assertEquals(quantity + difference, resultQuantity);
@@ -80,7 +80,7 @@ public class ShopRegisterTest {
     @Test
     public void subtractQuantity() throws Exception {
         long quantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
-        long difference = 2;
+        long difference = 2L;
         setObjectInCertainMethod("subtractQuantity", methodsShopReg, objShopReg, difference);
         long resultQuantity = (long)getObjectFromCertainMethod("getQuantity", methodsShopReg, objShopReg);
         assertEquals(quantity - difference, resultQuantity);
@@ -89,13 +89,13 @@ public class ShopRegisterTest {
     @Test
     public void getPrice() throws Exception {
         long resultPrice = (long)getObjectFromCertainMethod("getPrice", methodsShopReg, objShopReg);
-        assertEquals(resultPrice, 100);
+        assertEquals(resultPrice, 100L);
     }
 
     @Test
     public void setPrice() throws Exception {
-        setObjectInCertainMethod("setPrice", methodsShopReg, objShopReg, 200);
+        setObjectInCertainMethod("setPrice", methodsShopReg, objShopReg, 200L);
         long resultPrice = (long)getObjectFromCertainMethod("getPrice", methodsShopReg, objShopReg);
-        assertEquals(resultPrice, 200);
+        assertEquals(resultPrice, 200L);
     }
 }
