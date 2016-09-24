@@ -5,9 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import shop.Cheese;
 
-import java.util.Calendar;
 import java.util.Date;
 
+import static shoptest.TimeDelta.addOneHour;
 import static org.junit.Assert.*;
 
 /**
@@ -20,11 +20,7 @@ public class CheeseTest {
 
     @Before
     public void setUp() throws Exception {
-        Calendar testCalender = Calendar.getInstance();
-        testCalender.setTime(new Date());
-        testCalender.add(Calendar.HOUR, 1);
-
-        testDate = testCalender.getTime();
+        testDate = addOneHour(new Date());
         testCheese = new Cheese(120L, 700.0, "Normand Cheese inc.", testDate, 40.0);
     }
 

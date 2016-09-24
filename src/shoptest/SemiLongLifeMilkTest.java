@@ -1,26 +1,29 @@
 package shoptest;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import shop.Milk;
+import shop.SemiLongLifeMilk;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static shoptest.TimeDelta.addOneHour;
 import static org.junit.Assert.*;
 
 /**
- * Created by Slezak Attila on 2016.09.13..
+ * Created by Slezak Attila on 2016.09.24..
  */
-public class MilkTest {
+public class SemiLongLifeMilkTest {
 
-    private Milk testMilk;
+    private SemiLongLifeMilk testMilk;
     private Date testDate;
 
     @Before
     public void setUp() throws Exception {
         testDate = addOneHour(new Date());
-        testMilk = new Milk(101L, Milk.LITER, "Plain Milk inc.", testDate, Milk.WHOLE_MILK) {};
+        testMilk = new SemiLongLifeMilk(101L, Milk.LITER, "Plain Milk inc.", testDate, Milk.WHOLE_MILK) {};
     }
 
     @After
