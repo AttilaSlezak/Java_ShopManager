@@ -6,10 +6,9 @@ import org.junit.Test;
 import shop.Milk;
 import shop.SemiLongLifeMilk;
 
-import java.util.Calendar;
 import java.util.Date;
 
-import static shoptest.TimeDelta.addOneHour;
+import static auxiliary.testclasses.TimeDelta.addOneHour;
 import static org.junit.Assert.*;
 
 /**

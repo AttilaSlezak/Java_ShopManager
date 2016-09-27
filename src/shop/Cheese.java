@@ -28,7 +28,7 @@ public class Cheese extends Food {
     public String toString() {
         return "Cheese{" +
                 "barcode: " + super.getBarcode() +
-                ", weight: " + weight + " kg" +
+                ", weight: " + weight + " g" +
                 ", producer: '" + super.getProducer() + "'" +
                 ", best before: " + super.getBestBefore() +
                 ", fat content: " + fatContent + "%}";

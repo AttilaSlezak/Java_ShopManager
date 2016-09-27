@@ -7,7 +7,7 @@ import shop.Cheese;
 
 import java.util.Date;
 
-import static shoptest.TimeDelta.addOneHour;
+import static auxiliary.testclasses.TimeDelta.addOneHour;
 import static org.junit.Assert.*;
 
 /**
@@ -62,7 +62,7 @@ public class CheeseTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("Cheese{barcode: 120, weight: " + testCheese.getWeight() + " kg" +
+        assertEquals("Cheese{barcode: 120, weight: " + testCheese.getWeight() + " g" +
                 ", producer: 'Normand Cheese inc.', best before: " + testDate +
                 ", fat content: " + testCheese.getFatContent() + "%}", testCheese.toString());
     }

@@ -37,8 +37,8 @@ public class Shop {
     }
 
     private boolean isThereAnyCertainFood(Class foodSubClass) {
-        for (Enumeration oneFoodType = foodCounter.elements(); oneFoodType.hasMoreElements();) {
-            ShopRegister shopReg = (ShopRegister)oneFoodType.nextElement();
+        for (Enumeration shopRegs = foodCounter.elements(); shopRegs.hasMoreElements();) {
+            ShopRegister shopReg = (ShopRegister)shopRegs.nextElement();
             if (foodSubClass.isInstance(shopReg.getFood()) && shopReg.getQuantity() > 0) {
                 return true;
             }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import shop.Milk;
 import shop.MilkFactory;
 import shop.Shop;
-import static shoptest.PrivateDataAccessor.*;
+import static auxiliary.testclasses.PrivateDataAccessor.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -42,13 +42,13 @@ public class ShopRegisterTest {
     }
 
     @Test
-    public void getMilk() throws Exception {
+    public void getFood() throws Exception {
         Milk milk = (Milk)getObjectFromCertainMethod("getFood", methodsShopReg, objShopReg);
         assertEquals(testMilk, milk);
     }
 
     @Test
-    public void setMilk() throws Exception {
+    public void setFood() throws Exception {
         Milk milk = MilkFactory.newLongLifeMilk(201L, Milk.HALF_LITER, "Plain Milk inc.", new Date(), Milk.LOW_FAT_MILK);
         setObjectInCertainMethod("setFood", methodsShopReg, objShopReg, milk);
         Milk resultMilk = (Milk)getObjectFromCertainMethod("getFood", methodsShopReg, objShopReg);

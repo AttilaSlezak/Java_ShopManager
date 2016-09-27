@@ -8,7 +8,7 @@ import shop.Milk;
 
 import java.util.Date;
 
-import static shoptest.TimeDelta.addOneHour;
+import static auxiliary.testclasses.TimeDelta.addOneHour;
 import static org.junit.Assert.*;
 
 /**

@@ -7,7 +7,7 @@ import shop.Cheese;
 import shop.Milk;
 import shop.MilkFactory;
 import shop.Shop;
-import static shoptest.PrivateDataAccessor.*;
+import static auxiliary.testclasses.PrivateDataAccessor.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
  */
 public class ShopTest {
 
+    private Method[] methodsShop = Shop.class.getDeclaredMethods();
     private Method[] methodsShopReg = Shop.class.getDeclaredClasses()[0].getDeclaredMethods();
     private Hashtable testShopFoodCounter;
     private Shop testShop;
@@ -35,7 +36,7 @@ public class ShopTest {
         Field fieldFoodCounter = Shop.class.getDeclaredField("foodCounter");
         fieldFoodCounter.setAccessible(true);
         testShopFoodCounter = (Hashtable)fieldFoodCounter.get(testShop);
-        // fieldFoodCounter.setAccessible(false);
+        fieldFoodCounter.setAccessible(false);
     }
 
     @After
@@ -68,7 +69,7 @@ public class ShopTest {
 
     @Test
     public void isThereAnyMilkIfYes() throws Exception {
-        testShop.addNewFoodToFoodCounter(testMilk, 3L, 100L);
+        testShop.addNewFoodToFoodCounter(testMilk, 1L, 100L);
         assertTrue(testShop.isThereAnyMilk());
     }
 
@@ -86,43 +87,46 @@ public class ShopTest {
     @Test
     public void isThereAnyCertainFoodIfNot() throws Exception {
         testShop.addNewFoodToFoodCounter(testMilk, 3L, 100L);
-        boolean result = (boolean)getObjectFromCertainMethod("isThereAnyCertainFood", Shop.class.getDeclaredMethods(),
-                testShop, Cheese.class);
+        boolean result = (boolean)getObjectFromCertainMethod("isThereAnyCertainFood", methodsShop, testShop,
+                Cheese.class);
         assertFalse(result);
     }
 
     @Test
     public void isThereAnyCertainFoodIfYes() throws Exception {
         testShop.addNewFoodToFoodCounter(testCheese, 5L, 200L);
-        boolean result = (boolean)getObjectFromCertainMethod("isThereAnyCertainFood", Shop.class.getDeclaredMethods(),
-                testShop, Cheese.class);
+        boolean result = (boolean)getObjectFromCertainMethod("isThereAnyCertainFood", methodsShop, testShop,
+                Cheese.class);
         assertTrue(result);
     }
 
     @Test
     public void addNewFoodToFoodCounter() throws Exception {
         testShop.addNewFoodToFoodCounter(testMilk, 3L, 100L);
-        assertEquals(3L, getObjectFromCertainMethod("getQuantity", methodsShopReg, testShopFoodCounter.get(101L)));
+        assertEquals(3L, getObjectFromCertainMethod("getQuantity", methodsShopReg,
+                testShopFoodCounter.get(testMilk.getBarcode())));
     }
 
     @Test
     public void replenishFoodCounter() throws Exception {
         testShop.addNewFoodToFoodCounter(testMilk, 3L, 100L);
         testShop.replenishFoodCounter(testMilk.getBarcode(), 2L);
-        assertEquals(5L, getObjectFromCertainMethod("getQuantity", methodsShopReg, testShopFoodCounter.get(101L)));
+        assertEquals(5L, getObjectFromCertainMethod("getQuantity", methodsShopReg,
+                testShopFoodCounter.get(testMilk.getBarcode())));
     }
 
     @Test
     public void removeFoodFromFoodCounter() throws  Exception {
         testShop.addNewFoodToFoodCounter(testMilk, 3L, 100L);
-        testShop.removeFoodFromFoodCounter(101L);
-        assertFalse(testShopFoodCounter.containsKey(101L));
+        testShop.removeFoodFromFoodCounter(testMilk.getBarcode());
+        assertFalse(testShopFoodCounter.containsKey(testMilk.getBarcode()));
     }
 
     @Test
     public void buyMilk() throws Exception {
         testShop.addNewFoodToFoodCounter(testMilk, 3L, 100L);
-        testShop.buyFood(101L, 2L);
-        assertEquals(1L, getObjectFromCertainMethod("getQuantity", methodsShopReg, testShopFoodCounter.get(101L)));
+        testShop.buyFood(testMilk.getBarcode(), 2L);
+        assertEquals(1L, getObjectFromCertainMethod("getQuantity", methodsShopReg,
+                testShopFoodCounter.get(testMilk.getBarcode())));
     }
 }
